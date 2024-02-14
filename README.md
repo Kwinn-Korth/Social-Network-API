@@ -31,7 +31,9 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 ## Contributing
 
-Please don't push to this project
+Please don't push to this project.
+
+Thank you to {https://github.com/JCovi}, I used parts of his seedDB.js code to help make mine, because my seeding code didn't work.
 
 ## Tests
 
