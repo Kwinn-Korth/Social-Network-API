@@ -12,7 +12,6 @@ getAllThoughts(req,res) {
         res.status(500).json(err);
     });
 },
-
     getThoughtById(req, res) {
         Thought.findOne({ _id: req.params.id})
             .select('-__v')
@@ -23,7 +22,6 @@ getAllThoughts(req,res) {
             )
             .catch((err) => res.status(500).json(err));
     },
-
 addThought(req, res) {
     Thought.create(req.body)
     .then((dbThoughtData) => {
@@ -34,7 +32,6 @@ addThought(req, res) {
         );
     })
 },
-
 updateThought({ params, body }, res) {
     Thought.findOneAndUpdate({ _id: params.id }, body, {
         new: true, 
@@ -49,7 +46,6 @@ updateThought({ params, body }, res) {
     })
     .catch((err) => res.status(400).json(err));
 },
-
 deleteThought(req, res) {
     Thought.findOneAndDelete ({ _id: req.params.id})
         .then((deleteThought) =>
@@ -68,7 +64,6 @@ deleteThought(req, res) {
         )
         .catch((err) => res.status(500).json(err));      
 },
-
 addReaction({ params, body }, res) {
     Thought.findOneAndUpdate(
         { _id: params.thoughtId },
@@ -83,7 +78,6 @@ addReaction({ params, body }, res) {
         res.json(dbThoughData);
     }).catch((err) => res.json(err));
 },
-
     removeReaction(req, res) {
         Thought.findOneAndDelete (
             { _id: req.params.id},

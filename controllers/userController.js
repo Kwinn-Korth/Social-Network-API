@@ -9,7 +9,6 @@ module.exports = {
             .then((allUsers) => res.json(allUsers))
             .catch((err) => res.status(500).json(err));
     },
-
     getSingleUser(req, res) {
         User.findOne({ _id: req.params.id})
             .select('-__v')
@@ -20,7 +19,6 @@ module.exports = {
             )
             .catch((err) => res.status(500).json(err));
     },
-
     createUser( req, res) {
         User.create(req.body).then((createUser) => res.json(createUser))
         .catch((err) => {
@@ -28,7 +26,6 @@ module.exports = {
             return res.status(500).json(err);
         });
     },
-
     updateUser({ params, body }, res) {
         User.findOneAndUpdate (
             { _id: params.id },
@@ -41,7 +38,6 @@ module.exports = {
             )
             .catch((err) => res.status(500).json(err));
     },
-
     deleteUser(req, res) {
         User.findOneAndDelete ({ _id: req.params.id})
             .then((deleteUser) =>
@@ -52,7 +48,6 @@ module.exports = {
             .then(() => res.json({message: 'Success! User and user thoughts have been deleted! '}))
             .catch((err) => res.status(500).json(err));
     },
-
 addfriend(req, res) {
     User.findOneAndUpdate (
         { _id: req.params.id },
@@ -66,7 +61,6 @@ addfriend(req, res) {
     )
     .catch((err) => res.status(500).json(err));
 },
-
 removeFriend({ params }, res) {
     console.log("remove friend", params.friendId);
     User.findOneAndUpdate(
@@ -77,6 +71,4 @@ removeFriend({ params }, res) {
     .then((userData) => res.json(userData))
     .catch((err) => res.json(err));
 },
-
-
 };
