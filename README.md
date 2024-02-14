@@ -25,6 +25,8 @@ Run "npm install" to get the right packages, then run "npm run seed" to seed tht
 
 [video link]{https://mail.google.com/mail/u/0/#inbox/FMfcgzGxRfFwgjWkcsmwPvVNMCjpFRpq}
 
+[image of working]{./images/social-network-api.png}
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
