@@ -21,7 +21,9 @@ Just clone the repository onto your local machine
 
 ## Usage
 
-Run npm install and then use node index.js to get everything going
+Run "npm install" to get the right packages, then run "npm run seed" to seed tht database. After that you can run "npm run start" and it will start going!
+
+[video link]{https://mail.google.com/mail/u/0/#inbox/FMfcgzGxRfFwgjWkcsmwPvVNMCjpFRpq}
 
 ## License
 
@@ -33,10 +35,10 @@ Please don't push to this project
 
 ## Tests
 
-There is a test command but it isn't working yet
+There is a test command but it isn't working yet. You can test the endpoints in Insomnia
 
 ## Questions
 
-For questions or support, please contact [undefined](https://github.com/undefined).
+For questions or support, please contact [github](https://github.Kwinn-Korth).
 
 Email: coming soon
