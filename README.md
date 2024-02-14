@@ -21,7 +21,9 @@ Just clone the repository onto your local machine
 
 ## Usage
 
-Run npm install and then use node index.js to get everything going
+Run "npm install" to get the right packages, then run "npm run seed" to seed tht database. After that you can run "npm run start" and it will start going!
+
+[video link]{https://mail.google.com/mail/u/0/#inbox/FMfcgzGxRfFwgjWkcsmwPvVNMCjpFRpq}
 
 ## License
 
@@ -29,14 +31,16 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 ## Contributing
 
-Please don't push to this project
+Please don't push to this project.
+
+Thank you to {https://github.com/JCovi}, I used parts of his seedDB.js code to help make mine, because my seeding code didn't work.
 
 ## Tests
 
-There is a test command but it isn't working yet
+There is a test command but it isn't working yet. You can test the endpoints in Insomnia
 
 ## Questions
 
-For questions or support, please contact [undefined](https://github.com/undefined).
+For questions or support, please contact [github](https://github.Kwinn-Korth).
 
 Email: coming soon
