@@ -1,80 +1,82 @@
-const User = require('../models/User');
-
-// TODO: Implement user-related controller functions
-
-// Get all users
-const getAllUsers = async (req, res) => {
-  try {
-    // TODO: Fetch all users from the database
-     const users = await User.find({});
-      res.json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
-// Get user by ID
-const getUserById = async (req, res) => {
-  try {
-    // TODO: Fetch user by ID from the database
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-     res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
-// Create a new user
-const createUser = async (req, res) => {
-  try {
-    // TODO: Create a new user in the database
-     const newUser = await User.create(req.body);
-     res.status(201).json(newUser);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
-// Update user by ID
-const updateUserById = async (req, res) => {
-  try {
-    // TODO: Update user by ID in the database
-     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-     if (!updatedUser) {
-       return res.status(404).json({ message: 'User not found' });
-     }
-     res.json(updatedUser);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
-// Delete user by ID
-const deleteUserById = async (req, res) => {
-  try {
-    // TODO: Delete user by ID from the database
-     const deletedUser = await User.findByIdAndDelete(req.params.id);
-     if (!deletedUser) {
-       return res.status(404).json({ message: 'User not found' });
-     }
-     res.json({ message: 'User deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
+const { User, Thought} = require('../models');
 
 module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUserById,
-  deleteUserById,
+
+    getUsers (req, res) {
+        User.find()
+            .sort({_id: -1})
+            .select('-__v')
+            .then((allUsers) => res.json(allUsers))
+            .catch((err) => res.status(500).json(err));
+    },
+
+    getSingleUser(req, res) {
+        User.findOne({ _id: req.params.id})
+            .select('-__v')
+            .then((singleUser) =>
+                !singleUser
+                    ? res.status(404).json({message: 'Error: User ID not found'})
+                    : res.json(singleUser)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+
+    createUser( req, res) {
+        User.create(req.body).then((createUser) => res.json(createUser))
+        .catch((err) => {
+            console.log(err);
+            return res.status(500).json(err);
+        });
+    },
+
+    updateUser({ params, body }, res) {
+        User.findOneAndUpdate (
+            { _id: params.id },
+            body, { new : true, runValidator: true},
+        )
+            .then((updateUser) =>
+                !updateUser
+                    ? res.status(404).json({message: 'Error: User ID not found'})
+                    : res.json(updateUser)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+
+    deleteUser(req, res) {
+        User.findOneAndDelete ({ _id: req.params.id})
+            .then((deleteUser) =>
+                !deleteUser
+                    ? res.status(404).json({message: 'Error: User ID not found'})
+                    : Thought.deleteMany ({ _id: {$in: deleteUser.thoughts}})
+            )
+            .then(() => res.json({message: 'Success! User and user thoughts have been deleted! '}))
+            .catch((err) => res.status(500).json(err));
+    },
+
+addfriend(req, res) {
+    User.findOneAndUpdate (
+        { _id: req.params.id },
+        { $addToSet: { friends: req.params.friendId}},
+        { runValidators: true, new: true }
+    )
+    .then((isFriend) =>
+        !isFriend
+            ? res.status(404).json({ message: 'Error: User ID not found'})
+            : res.json(isFriend)
+    )
+    .catch((err) => res.status(500).json(err));
+},
+
+removeFriend({ params }, res) {
+    console.log("remove friend", params.friendId);
+    User.findOneAndUpdate(
+        { _id: params.userId },
+        { $pull: { friends: params.friendId } },
+        { new: true }
+    )
+    .then((userData) => res.json(userData))
+    .catch((err) => res.json(err));
+},
+
+
 };

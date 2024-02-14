@@ -1,18 +1,37 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require("mongoose");
+const formatDate = require("../utils/formatDate");
 
-const reactionSchema = new mongoose.Schema({
-  // TODO: Define reaction schema fields
-  // Example: userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  //          thoughtId: { type: mongoose.Schema.Types.ObjectId, ref: 'Thought', required: true },
-  //          content: { type: String, required: true },
+const reactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      maxlength: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (CreatedAt) => {
+        return formatDate(CreatedAt);
+      },
+    },
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
+  }
+);
 
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  thoughtId: { type: mongoose.Schema.Types.ObjectId, ref: 'Thought', required: true },
-  content: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
-
-const Reaction = mongoose.model('Reaction', reactionSchema);
+const Reaction = model("Reaction", reactionSchema);
 
 module.exports = Reaction;
